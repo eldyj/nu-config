@@ -5,15 +5,15 @@ def "prompt left" [] {
     
     # os icon
     [
-      "white3",
+      "white2",
       "black1",
       $os_icon
     ]
   
     # current directory (shorted)
     [
-      "blue2",
-      "white4",
+      "blue1",
+      "white2",
       $"(char nf_folder1) (spwd -t -b -r)"
     ],
 
@@ -37,24 +37,24 @@ def "prompt right" [] {
     [
       "white4",
       "black1",
-      $"(date now | date format '%H:%M:%S') (char -i 0xf64f)"
+      $"(date now | date format '%H:%M:%S %p') (char -i 0xf64f)"
     ],
 
     # last command execution time
     [
       "black1",
-      "white4",
+      "black4",
       (if (cmd_duration) >= 0.003 {
-        $"(cmd_duration | $in * 1000 | math round) (char -i 0xf608)"
+        $"(char nf_right_segment_thin) (cmd_duration | $in * 1000 | math round) (char -i 0xf608)"
       })
     ],
 
     # last exit code (if error)
     [
+      "black1",
       "red1",
-      "white3",
       (if $env.LAST_EXIT_CODE != 0 {
-        $"\(($env.LAST_EXIT_CODE)\) (char failed)"
+        $"(char nf_right_segment_thin) ($env.LAST_EXIT_CODE) (char failed)"
       })
     ]
   ]
