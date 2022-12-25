@@ -14,7 +14,7 @@ def "prompt left" [] {
     [
       "blue2",
       "white4",
-      $"(char nf_folder1) (spwd -t)"
+      $"(char nf_folder1) (spwd -t -b -r)"
     ],
 
     # git branch
@@ -59,3 +59,6 @@ def "prompt right" [] {
     ]
   ]
 }
+
+let-env PROMPT_COMMAND = {prompt left}
+let-env PROMPT_COMMAND_RIGHT = {prompt right}

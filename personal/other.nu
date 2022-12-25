@@ -37,5 +37,3 @@ alias tokei = tokei --exclude "*.txt"
 let-env EDITOR = "nvim"
 let-env VISUAL = "nvim"
 let-env PROMPT_INDICATOR = {""}
-let-env PROMPT_COMMAND = {prompt left}
-let-env PROMPT_COMMAND_RIGHT = {prompt right}

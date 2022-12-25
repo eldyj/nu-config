@@ -1,7 +1,9 @@
 # short pwd
 def spwd [
-  --house(-h): bool # replace tilda with house character
-  --tiny(-t): bool  # don't add s2nd character to dotfiles
+  --house(-h): bool   # replace tilda with house character
+  --tiny(-t): bool    # don't add s2nd character to dotfiles
+  --bold(-b): bool    # maked last segment bold
+  --noreset(-r): bool # don't reset style after last segment (if --bold)
 ] {
   let home_char = (if $house {
     char nf_house1
@@ -21,7 +23,11 @@ def spwd [
   | each {|el, id|
     let spwd_src = ($el | split chars)
     if ($id == $spwd_len) {
-      $el
+      if $bold {
+        $"(ansi attr_bold)($el)(if not $noreset {ansi reset})"
+      } else {
+        $el
+      }
     } else if ($spwd_src.0 == "." and (not $tiny)) {
       $".($spwd_src.1)"
     } else {
