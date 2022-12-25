@@ -15,3 +15,6 @@ def "cross home" [] {
     $env.HOME
   }
 }
+
+let cross_username = (cross username)
+let cross_home = (cross home)

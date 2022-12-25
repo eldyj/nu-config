@@ -36,4 +36,3 @@ alias tokei = tokei --exclude "*.txt"
 
 let-env EDITOR = "nvim"
 let-env VISUAL = "nvim"
-let-env PATH = $"($env.PATH):(glob '~/.local/bin')"

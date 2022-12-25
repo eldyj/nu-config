@@ -23,6 +23,15 @@ def clean_list [l ,--key(-k): string] {
   }
 }
 
+def test [
+  target: block
+] {
+  do -i $target
+  | complete
+  | get stderr
+  | $in == ""
+}
+
 def os_icon [] {
   let os = ((sys).host.long_os_version | str downcase)
   if $os =~ windows {
@@ -103,3 +112,5 @@ def os_icon [] {
     char -i 0xe779
   }
 }
+
+let os_icon = (os_icon)

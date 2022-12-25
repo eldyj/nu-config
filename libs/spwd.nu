@@ -2,7 +2,7 @@
 def spwd [] {
   let spwd_paths = (
     $"!($env.PWD)" |
-      str replace $"!(cross home)" (char nf_house1) -s |
+      str replace $"!($cross_home)" (char nf_house1) -s |
       split row (char psep)
   )
 
