@@ -199,3 +199,5 @@ def "ansix colorschemes" [] {
     }
   }
 }
+
+let ansix_colorschemes = (ansix colorschemes)

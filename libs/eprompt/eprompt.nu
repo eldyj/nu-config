@@ -39,12 +39,11 @@ def "eprompt theme" [
   --reverse(-r): bool             # for right prompt
 ] {
   let mode = (if $reverse {"right"} else {"left"})
-  let themes = (eprompt themes)
-  let current_theme = (if $theme in $themes {
-    $themes
+  let current_theme = (if $theme in $eprompt_themes {
+    $eprompt_themes
     | get $theme
   } else {
-    $themes.powerline
+    $eprompt_themes.powerline
   })
 
   let current_theme = (if $reverse {$current_theme.reverse} else {$current_theme.normal})
@@ -65,14 +64,71 @@ def "eprompt theme" [
 }
 
 def "eprompt test" [--all(-a):bool] {
-  let test = [[bg,fg,text];["black1","white3","just"],["red1","black1","a"],["black2","yellow1","test"]]
-  ["ayu","catpuccin","dracula","nord","tokyo night","tommorow night","gruvbox","ohmynu"]
+  let test = [
+    [bg,fg,text];
+
+    [
+      "black1",
+      "white3",
+      "just"
+    ],
+
+    [
+      "red1",
+      "black1",
+      "a"
+    ],
+
+    [
+      "black2",
+      "yellow1",
+      "test"
+    ]
+  ]
+
+  [
+    "ayu",
+    "catpuccin",
+    "dracula",
+    "nord",
+    "tokyo night",
+    "tommorow night",
+    "gruvbox",
+    "ohmynu"
+  ]
   | each {|colorscheme|
-    let test = ($test | append {bg:"black3",fg:"red1",text:$colorscheme})
-    for theme in ["powerline","rounded","nacked","nacked-upside"] {
-      let test = ($test | append {bg:"black4",fg:"orange1",text:$theme})
+    let test = (
+      $test
+      | append {
+        bg:"black3",
+        fg:"red1",
+        text:$colorscheme
+      }
+    )
+
+    for theme in [
+        "powerline",
+        "rounded",
+        "nacked",
+        "nacked-upside",
+        "flame",
+        "ice",
+        "pixel",
+        "bigpixel"
+    ] {
+      let test = (
+        $test
+        | append {
+          bg:"black4",
+          fg:"orange1",
+          text:$theme
+        }
+      )
+
       [
-        (if $all {eprompt theme $theme -c $colorscheme $test -p -r}),
+        (if $all {
+          eprompt theme $theme -c $colorscheme $test -p -r
+        }),
         (eprompt theme $theme -c $colorscheme $test -p)
       ]
       | str collect ""

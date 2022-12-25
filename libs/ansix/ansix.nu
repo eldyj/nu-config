@@ -26,7 +26,7 @@ def "ansix theme" [
   --fg(-f): string       # font color
   --justcolor(-c): bool  # return only color
 ] {
-  let current_theme = (ansix colorschemes | get $theme)
+  let current_theme = ($ansix_colorschemes | get $theme)
   if $justcolor {
     if $fg in $current_theme {
       $current_theme | get $fg
