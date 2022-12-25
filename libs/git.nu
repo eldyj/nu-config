@@ -16,7 +16,7 @@ def "git untracked_count" [] {
 def "git modified_count" [] {
   git status --porcelain
   | lines
-  | where $it =~ 'M *' or $it =~ 'A *'
+  | where $it =~ 'M *' or $it =~ 'A *' or $it =~ 'D *'
   | length
 }
 
