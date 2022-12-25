@@ -63,6 +63,41 @@ def "eprompt theme" [
   eprompt -s $current_theme.sep -p (if not $nopre {$current_theme.pre}) -m $mode $segments
 }
 
+# git segment for eprompt
+def "eprompt git_segment" [colors: record] {
+  if (git is_git_folder) {
+    let status = (if (git is_touched) {
+      "dirty"
+    } else {
+      "clean"
+    })
+    let colors = ($colors | get $status)
+
+    {
+      bg:$colors.bg,
+      fg:$colors.fg,
+      text: (
+        [
+          (if (git modified_count) != 0 {
+            $"(char -i 0x00B1)(git modified_count)"
+          }),
+
+          (if (git untracked_count) != 0 {
+            $"?(git untracked_count)"
+          }),
+
+          $"+(git ahead_count)"
+        ]
+        | str join " "
+        | str trim
+        | str replace -a -s "  " " "
+      )
+    }
+  } else {
+    {bg:"",fg:"",text:""}
+  }
+}
+
 def "eprompt test" [--all(-a):bool] {
   let test = [
     [bg,fg,text];

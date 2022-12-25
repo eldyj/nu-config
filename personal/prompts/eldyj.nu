@@ -1,5 +1,17 @@
 # left prompt
 def "prompt left" [] {
+  let git_status = (eprompt git_segment {
+    clean: {
+      bg: "blue2",
+      fg: "white4"
+    },
+
+    dirty: {
+      bg: "yellow1",
+      fg: "black1"
+    }
+  })
+
   eprompt theme powerline -c nord [
     [bg,fg,text];
     
@@ -17,20 +29,27 @@ def "prompt left" [] {
       $"(char -i 0xF2BE) ($cross_username)"
     ],
 
-    # git branch
-    [
-      "black3",
-      "cyan1",
-      (if test {git branch} {
-        $"(char nf_branch) (git branch --show-current)"
-      })
-    ],
-
     # current directory (shorted)
     [
       "black2",
       "blue2",
       $"(char nf_folder1) (spwd)"
+    ],
+
+    # git branch
+    [
+      "black3",
+      "cyan1",
+      (if (git is_git_folder) {
+        $"(char nf_branch) (git branch --show-current)"
+      })
+    ],
+   
+    # git status
+    [
+      $git_status.bg,
+      $git_status.fg,
+      $"(char nf_git) ($git_status.text)"
     ]
   ]
 }
