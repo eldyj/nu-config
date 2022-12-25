@@ -21,7 +21,7 @@ def "prompt left" [] {
     [
       "black3",
       "cyan1",
-      (if (do -i {git branch} | complete).exit_code == 0 {
+      (if (do -i {git branch} | complete).stderr == "" {
         git branch --show-current
         | str replace -a "\n" ""
       })
