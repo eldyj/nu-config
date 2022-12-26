@@ -1,15 +1,19 @@
+# checl if current folder have git repository
 def "git is_git_folder" [] {
   test {git status}
 }
 
+# git branch name
 def "git branch_name" [] {
   git branch --show-current
 }
 
+# check uncommited changes
 def "git is_touched" [] {
   (git status --porcelain) != ""
 }
 
+# untracked files count
 def "git untracked_count" [] {
   git status --porcelain
   | lines
@@ -17,6 +21,7 @@ def "git untracked_count" [] {
   | length
 }
 
+# uncommited modified (edited, added, deleted) files count
 def "git modified_count" [] {
   git status --porcelain
   | lines
@@ -24,6 +29,7 @@ def "git modified_count" [] {
   | length
 }
 
+# all comits count
 def "git commits_count" [] {
   if (test {git log}) {
     git log
@@ -35,6 +41,7 @@ def "git commits_count" [] {
   }
 }
 
+# check if local repository have commits which not pushed yet
 def "git is_ahead" [] {
   git status
   | find ahead
@@ -42,6 +49,7 @@ def "git is_ahead" [] {
   | $in > 0
 }
 
+# count of local commits which not pushed yet
 def "git ahead_count" [] {
   if (git is_ahead) {
     git status

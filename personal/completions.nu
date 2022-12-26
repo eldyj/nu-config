@@ -1,4 +1,89 @@
 module completions {
+  # crystal language
+  export extern "crystal" [
+    file: path
+    --help(-h): bool
+    --version(-v): bool
+  ]
+
+  # create empty crystal project
+  export extern "crystal init" [
+    type: string
+    name: string
+    --help(-h): bool
+    --force(-f): bool
+    --skip-existing(-s): bool
+  ]
+
+
+  # run build program
+  export extern "crystal build" [
+    file: path
+    --debug(-d): bool
+    --define(-D): string
+    --no-debug: bool
+    --emit: string
+    --format(-f): string
+    --error-trace: bool
+    --ll: bool
+    --link-flags: string
+    --mcpu: string
+    --mattr: string
+    --mcmodel: string
+    --warnings: string
+    --error-on-warnings: bool
+    --exclude-warnings: path
+    --no-color: bool
+    --no-codegen: bool
+    -o: string
+    --prelude: path
+    --release: bool
+    --stats(-s): bool
+    --progress(-p): bool
+    --time(-t): bool
+    --single-module: bool
+    --threads: int
+    --verbose: bool
+    --static: bool
+    --stdin-filename: bool
+    --help(-h): bool
+    --version(-v): bool
+  ]
+
+  # run crystal program
+  export extern "crystal run" [
+    file: path
+    --debug(-d): bool
+    --define(-D): string
+    --no-debug: bool
+    --emit: string
+    --format(-f): string
+    --error-trace: bool
+    --ll: bool
+    --link-flags: string
+    --mcpu: string
+    --mattr: string
+    --mcmodel: string
+    --warnings: string
+    --error-on-warnings: bool
+    --exclude-warnings: path
+    --no-color: bool
+    --no-codegen: bool
+    -o: string
+    --prelude: path
+    --release: bool
+    --stats(-s): bool
+    --progress(-p): bool
+    --time(-t): bool
+    --single-module: bool
+    --threads: int
+    --verbose: bool
+    --static: bool
+    --stdin-filename: bool
+    --help(-h): bool
+    --version(-v): bool
+  ]
+
   # rust package manager
   export extern "cargo" [
     --version(-v): bool
@@ -96,6 +181,7 @@ module completions {
     --verbose(-v): bool
   ]
 
+  # scaka package manager
   export extern "sbt" [
     --help(-h): bool
     --verbose(-v): bool
@@ -121,6 +207,7 @@ module completions {
     --batch: bool
   ]
 
+  # compile scala project
   export extern "sbt compile" [
     --help(-h): bool
     --verbose(-v): bool
@@ -144,6 +231,7 @@ module completions {
     --no-global: bool
     --jvm-debug: string
     --batch: bool
+    --native: bool
   ]
 
   export extern "sbt run" [
@@ -169,6 +257,7 @@ module completions {
     --no-global: bool
     --jvm-debug: string
     --batch: bool
+    --native: bool
   ]
 
   def "nu-complete git branches" [] {
