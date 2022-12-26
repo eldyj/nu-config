@@ -64,9 +64,35 @@ def "eprompt theme" [
 }
 
 # git segment for eprompt
-def "eprompt git_segment" [colors: record] {
+def "eprompt git_segment" [
+  colors: record,     # colors for every status
+  --format(-f): list  # format array, like ['!%modfied%','?%untracked%','+%ahead%','-%behind%']
+] {
   if (git is_git_folder) {
-    let status = (if (git is_touched) {
+    let text = ($format
+      | if not (git is_behind) {
+        str replace -s "%ahead%" $"(git ahead_count)"
+        | where $it !~ "%behind%"
+      } else {
+        str replace -s "%behind%" $"(git behind_count)"
+        | where $it !~ "%ahead%"
+      }
+      | if (git modified_count) != 0 {
+        str replace -s "%modified%" $"(git modified_count)"
+      } else {
+        where $it !~ "%modified%"
+      }
+      | if (git untracked_count) != 0 {
+        str replace -s "%untracked%" $"(git untracked_count)"
+      } else {
+        where $it !~ "%untracked%"
+      }
+    )
+
+    let status = (
+    if (git is_behind) {
+      "behind"
+    } else if (git is_touched) {
       "dirty"
     } else if (git is_ahead) {
       "ahead"
@@ -79,20 +105,9 @@ def "eprompt git_segment" [colors: record] {
       bg:$colors.bg,
       fg:$colors.fg,
       text: (
-        [
-          (if (git modified_count) != 0 {
-            $"(char -i 0x00B1)(git modified_count)"
-          }),
-
-          (if (git untracked_count) != 0 {
-            $"?(git untracked_count)"
-          }),
-
-          $"+(git ahead_count)"
-        ]
+        $text
         | str join " "
         | str trim
-        | str replace -a -s "  " " "
       )
     }
   } else {

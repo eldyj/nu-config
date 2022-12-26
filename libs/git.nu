@@ -61,3 +61,24 @@ def "git ahead_count" [] {
     0
   }
 }
+
+# check if remote repository have changes which local haven't
+def "git is_behind" [] {
+  git status
+  | find behind
+  | length
+  | $in > 0
+}
+
+# count of remote commits which local repository haven't
+def "git behind_count" [] {
+  if (git is_behind) {
+    git status
+    | find behind
+    | split row " "
+    | last 2
+    | first
+  } else {
+    0
+  }
+}
