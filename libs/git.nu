@@ -38,7 +38,6 @@ def "git commits_count" [] {
 def "git is_ahead" [] {
   git status
   | find ahead
-  | find (git branch_name)
   | length
   | $in > 0
 }
@@ -47,8 +46,6 @@ def "git ahead_count" [] {
   if (git is_ahead) {
     git status
     | find ahead
-    | find (git branch_name)
-    | get 0
     | split row " "
     | last 2
     | first
