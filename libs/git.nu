@@ -21,9 +21,14 @@ def "git modified_count" [] {
 }
 
 def "git ahead_count" [] {
-  git log
-  | find commit
-  | length
+  if (test {git log}) {
+    git log
+    | lines
+    | where ($it | str starts-with "commit ")
+    | length
+  } else {
+    0
+  }
 }
 
 def "git branch_name" [] {

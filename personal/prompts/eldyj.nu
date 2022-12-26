@@ -66,6 +66,182 @@ def "prompt right" [] {
       $"(date now | date format '%H:%M:%S') (char -i 0xf64f)"
     ],
 
+    # crystal version
+    [
+      "black4",
+      "white4",
+      (if (ls) != null {
+        if (
+          ls
+          | get name
+          | where $it =~ '\.cr' or $it in [
+            '.shards.yml'
+          ]
+          | length
+        ) > 0 {
+        if (test {crystal -v}) {
+          crystal -v 
+          | split row " "
+          | get 1
+          | str replace -a -s "-dev" ""
+          | $"($in) (char -i 0xE62F)"
+          | str replace -a -s "\n" ""
+        }
+      }})
+    ]
+
+    # rust version
+    [
+      "red1",
+      "white4",
+      (if (ls) != null {
+        if (
+          ls
+          | get name
+          | where $it =~ '\.rs' or $it in [
+            'Cargo.toml'
+          ]
+          | length
+        ) > 0 {
+        if (test {cargo --version}) {
+          cargo --version 
+          | split row " "
+          | get 1
+          | str replace -a -s "-stable" ""
+          | str replace -a -s "-nightly" ""
+          | str replace -a -s "-beta" ""
+          | $"($in) (char -i 0xE7A8)"
+          | str replace -a -s "\n" ""
+        }
+      }})
+    ]
+
+    # haskell version
+    #[
+    #  "pink1",
+    #  "white4",
+    #  (if (ls) != null {
+    #    if (
+    #      ls
+    #      | get name
+    #      | where $it =~ '\.hs' or $it =~ '\.cabal' or $it =~ '\.hs_boot' or $it in [
+    #        '.stack.yml'
+    #      ]
+    #      | length
+    #    ) > 0 {
+    #    if (test {ghc --version}) {
+    #      ghc --version 
+    #      | split row " "
+    #      | last
+    #      | str replace -a -s "-dev" ""
+    #      | $"($in) (char -i 0xE777)"
+    #      | str replace -a -s "\n" ""
+    #    }
+    #  }})
+    #]
+
+    # python version
+    #[
+    #  "green1",
+    #  "black3",
+    #  (if (ls) != null {
+    #  if (
+    #      ls
+    #      | get name
+    #      | where $it =~ '\.py' or $it in [
+    #        '.python-version',
+    #        'Pipfile',
+    #        'pyproject.toml'
+    #      ]
+    #      | length
+    #    ) > 0 {
+    #    if (test {python --version}) {
+    #      python --version 
+    #      | split row " "
+    #      | get 1
+    #      | str replace -a -s "-dev" ""
+    #      | $"($in) (char -i 0xE73C)"
+    #      | str replace -a -s "\n" ""
+    #    }
+    #  }})
+    #]
+
+    # lua version
+    #[
+    #  "cyan1",
+    #  "white4",
+    #  (if (ls) != null {
+    #    if (
+    #      ls
+    #      | get name
+    #      | where $it =~ '\.lua' or $it in [
+    #        '.lua-version',
+    #        'lua'
+    #      ]
+    #      | length
+    #    ) > 0 {
+    #    if (test {lua -v}) {
+    #      lua -v 
+    #      | split row " "
+    #      | get 1
+    #      | str replace -a -s "-dev" ""
+    #      | $"($in) (char -i 0xE620)"
+    #      | str replace -a -s "\n" ""
+    #    }
+    #  }})
+    #]
+
+    # js version
+    #[
+    #  "yellow1",
+    #  "black2",
+    #  (if (ls) != null {
+    #    if (
+    #      ls
+    #      | get name
+    #      | where $it !~ '\.json' and ($it =~ '\.js' or $it =~ '\.cjs' or $it =~ '\.mjs' or $it =~ '\.ts' or $it =~ '\.cts' or $it =~ '\.mts') or $it in [
+    #        '.node-version',
+    #        '.nvmrc',
+    #        'node-modules'
+    #      ]
+    #      | length
+    #    ) > 0 {
+    #    if (test {node --version}) {
+    #      node --version 
+    #      | split row " "
+    #      | get 0
+    #      | str replace -a -s "v" ""
+    #      | $"($in) (char -i 0xE718)"
+    #      | str replace -a -s "\n" ""
+    #    }
+    #  }})
+    #]
+
+    # php version
+    #[
+    #  "blue1",
+    #  "white4",
+    #  (if (ls) != null {
+    #    if (
+    #      ls
+    #      | get name
+    #      | where $it =~ '\.php' or $it in [
+    #        'composer.json',
+    #        '.php-version'
+    #      ]
+    #      | length
+    #    ) > 0 {
+    #    if (test {php --version}) {
+    #      php --version 
+    #      | split row " "
+    #      | get 1
+    #      | str replace -a -s "-dev" ""
+    #      | $"($in) (char -i 0xE608)"
+    #      | str replace -a -s "\n" ""
+    #    }
+    #  }})
+    #]
+
     # last command execution time
     [
       "black3",
@@ -80,7 +256,7 @@ def "prompt right" [] {
       "red1",
       "white3",
       (if $env.LAST_EXIT_CODE != 0 {
-        $"\(($env.LAST_EXIT_CODE)\) (char failed)"
+        $"($env.LAST_EXIT_CODE) (char failed)"
       })
     ]
   ]
