@@ -4,7 +4,6 @@
 
 alias b = bat
 alias c = clear
-alias d = dnf
 alias e = exit
 alias f = f95
 alias g = git
@@ -33,6 +32,12 @@ alias tokei = tokei --exclude "*.txt"
 #################
 ##  functions  ##
 #################
+
+
+# dnf help
+def d [] {
+  dnf help
+}
 
 # dnf install
 def "d i" [...packages] {
