@@ -6,6 +6,11 @@ def "prompt left" [] {
       fg: "white4"
     },
 
+    ahead: {
+      bg: "cyan1",
+      fg: "white4",
+    },
+
     dirty: {
       bg: "yellow1",
       fg: "black1"

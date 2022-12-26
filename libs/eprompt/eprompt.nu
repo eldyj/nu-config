@@ -68,6 +68,8 @@ def "eprompt git_segment" [colors: record] {
   if (git is_git_folder) {
     let status = (if (git is_touched) {
       "dirty"
+    } else if (git is_ahead) {
+      "ahead"
     } else {
       "clean"
     })
