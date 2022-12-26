@@ -92,7 +92,7 @@ def "prompt right" [] {
 
     # rust version
     [
-      "red1",
+      "orange1",
       "white4",
       (if (ls) != null {
         if (
