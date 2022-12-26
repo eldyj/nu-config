@@ -2,6 +2,10 @@ def "git is_git_folder" [] {
   test {git status}
 }
 
+def "git branch_name" [] {
+  git branch --show-current
+}
+
 def "git is_touched" [] {
   (git status --porcelain) != ""
 }
@@ -34,6 +38,7 @@ def "git commits_count" [] {
 def "git is_ahead" [] {
   git status
   | find ahead
+  | find (git branch_name)
   | length
   | $in > 0
 }
@@ -42,14 +47,12 @@ def "git ahead_count" [] {
   if (git is_ahead) {
     git status
     | find ahead
+    | find (git branch_name)
+    | get 0
     | split row " "
     | last 2
     | first
   } else {
     0
   }
-}
-
-def "git branch_name" [] {
-  git symbolic-ref --short HEAD
 }

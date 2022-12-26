@@ -2,7 +2,7 @@
 def "prompt left" [] {
   let git_status = (eprompt git_segment {
     clean: {
-      bg: "blue1",
+      bg: "blue2",
       fg: "white4"
     },
 
