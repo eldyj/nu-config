@@ -7,7 +7,7 @@ def "prompt left" [] {
     },
 
     ahead: {
-      bg: "cyan2",
+      bg: "green1",
       fg: "white4",
     },
 
