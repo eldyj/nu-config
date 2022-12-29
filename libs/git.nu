@@ -6,6 +6,7 @@ def "git is_git_folder" [] {
 # git branch name
 def "git branch_name" [] {
   git branch --show-current
+  | str replace -a -s "\n" ""
 }
 
 # check uncommited changes

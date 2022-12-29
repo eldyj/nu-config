@@ -2,7 +2,7 @@
 def "prompt left" [] {
   let git_status = (eprompt git_segment -f [
     $"(char -i 0x00b1)%modified%",
-    $"(char -i 0xF128)%untracked%",
+    $"?%untracked%",
     $"(char branch_ahead)%ahead%",
     $"(char branch_behind)%behind%"
   ] {

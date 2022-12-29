@@ -70,6 +70,7 @@ def "eprompt git_segment" [
 ] {
   if (git is_git_folder) {
     let text = ($format
+      | str replace -a -s "%branch%" $"(git branch_name)"
       | if not (git is_behind) {
         str replace -s "%ahead%" $"(git ahead_count)"
         | where $it !~ "%behind%"
