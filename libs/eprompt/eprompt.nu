@@ -41,7 +41,7 @@ def "eprompt theme" [
   --nospace(-s): bool             # skip space separator beetwen prompt and commands place
 ] {
   let mode = (if $reverse {"right"} else {"left"})
-  let mospace = (if $mospace {"yes"} else {"no"})
+  let nospace = (if $nospace {"yes"} else {"no"})
   let current_theme = (if $theme in $eprompt_themes {
     $eprompt_themes
     | get $theme
