@@ -4,6 +4,7 @@ def eprompt [
   segments: any,      # list of segments
   --pre(-p): string,  # displayed before first segment
   --mode(-m): string  # mode: normal || left, reversed || right
+  --nospace(-g): string # yes, no
 ] {
   let reverse = ($mode in [reversed, right])
   let segments = (clean_list $segments -k text)
@@ -26,7 +27,7 @@ def eprompt [
   }
   | append (ansi reset)
   | prepend (if $reverse {$"(ansi reset)(ansix -f $segments.0.bg)($sep)(ansi reset)"})
-  | append (if (not $reverse) {$"(ansi reset)(ansix -f ($segments | last).bg)($sep)(ansi reset) "})
+  | append (if (not $reverse) {$"(ansi reset)(ansix -f ($segments | last).bg)($sep)(ansi reset)(if $nospace != 'yes' {' '})"})
   | str collect ""
 }
 
@@ -37,8 +38,10 @@ def "eprompt theme" [
   --colorscheme(-c): string,      # colorscheme
   --nopre(-p): bool,              # ignore theme "pre"
   --reverse(-r): bool             # for right prompt
+  --nospace(-s): bool             # skip space separator beetwen prompt and commands place
 ] {
   let mode = (if $reverse {"right"} else {"left"})
+  let mospace = (if $mospace {"yes"} else {"no"})
   let current_theme = (if $theme in $eprompt_themes {
     $eprompt_themes
     | get $theme
@@ -60,7 +63,7 @@ def "eprompt theme" [
   } else {
     $segments
   })
-  eprompt -s $current_theme.sep -p (if not $nopre {$current_theme.pre}) -m $mode $segments
+  eprompt -s $current_theme.sep -p (if not $nopre {$current_theme.pre}) -m $mode $segments -g $nospace
 }
 
 # git segment for eprompt
