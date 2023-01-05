@@ -77,7 +77,7 @@ def "git behind_count" [] {
     git status
     | find behind
     | split row " "
-    | last 2
+    | last 6
     | first
   } else {
     0
