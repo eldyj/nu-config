@@ -9,3 +9,4 @@ source ~/.config/nushell/libs/cross.nu
 source ~/.config/nushell/libs/spwd.nu
 source ~/.config/nushell/personal/prompts/eldyj.nu
 source ~/.config/nushell/personal/other.nu
+source ~/.config/nushell/scripts/nusm/nusm.nu
