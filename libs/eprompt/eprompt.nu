@@ -11,18 +11,19 @@ def eprompt [
   let segments = (if $reverse {$segments | reverse} else {$segments})
 
   $segments
-  | each {|segment,index|
-      let pre = (if ($index != 0 and (not $reverse)) or ($index < ($segments | length | $in - 1) and $reverse) {
+  | enumerate
+  | each {|segment|
+      let pre = (if ($segment.index != 0 and (not $reverse)) or ($segment.index < ($segments | length | $in - 1) and $reverse) {
       let prev = (
         $segments
-        | get ($index - (if $reverse {-1} else {1}))
+        | get ($segment.index - (if $reverse {-1} else {1}))
       )
-      $"(ansix -f $prev.bg -b $segment.bg)($sep)"
-    } else if $pre != null {$"(ansi reset)(ansix -f ($segments | get $index).bg)($pre)"})
+      $"(ansix -f $prev.bg -b $segment.item.bg)($sep)"
+    } else if $pre != null {$"(ansi reset)(ansix -f ($segments | get $segment.index).bg)($pre)"})
     if $reverse {
-      $"(ansi reset)(ansix -f $segment.fg -b $segment.bg) ($segment.text) ($pre)"
+      $"(ansi reset)(ansix -f $segment.item.fg -b $segment.item.bg) ($segment.item.text) ($pre)"
     } else {
-      $"(ansi reset)($pre)(ansix -f $segment.fg -b $segment.bg) ($segment.text) "
+      $"(ansi reset)($pre)(ansix -f $segment.item.fg -b $segment.item.bg) ($segment.item.text) "
     }
   }
   | append (ansi reset)

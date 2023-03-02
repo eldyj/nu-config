@@ -20,13 +20,14 @@ def spwd [
   let spwd_len = (($spwd_paths | length) - 1)
 
   $spwd_paths
-  | each {|el, id|
-    let spwd_src = ($el | split chars)
-    if ($id == $spwd_len) {
+  | enumerate
+  | each {|el|
+    let spwd_src = ($el.item | split chars)
+    if ($el.index == $spwd_len) {
       if $bold {
-        $"(ansi attr_bold)($el)(if not $noreset {ansi reset})"
+        $"(ansi attr_bold)($el.item)(if not $noreset {ansi reset})"
       } else {
-        $el
+        $el.item
       }
     } else if ($spwd_src.0 == "." and (not $tiny)) {
       $".($spwd_src.1)"

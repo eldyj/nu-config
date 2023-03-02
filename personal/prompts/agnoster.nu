@@ -36,9 +36,9 @@ def "prompt left" [] {
           $"(ansi yellow)(char -i 0x26A1)"
         }),
 
-        (if (jobs -l | lines | length) > 0 {
-          $"(ansi cyan)(char -i 0x2699)"
-        })
+        #(if (jobs -l | lines | length) > 0 {
+        #  $"(ansi cyan)(char -i 0x2699)"
+        #})
       ]
       | where $it != null
       | str join " "
